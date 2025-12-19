@@ -8,6 +8,9 @@
 
     <title>Theatre Inventory</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/theatre-inventory.css">
 </head>
 <body>
@@ -16,22 +19,41 @@
         <a href="#">View</a>
     </nav>
 
-    <section style="display:none;">
+    <section id="pnlAdd">
         <h1>Add Inventory</h1>
 
+        <div id="addImage">
+            <input type="file" accept="image/*" capture="camera">
+        </div>
+
+        <div class="mat-text">
+            <!-- the css trick uses :not(:placeholder-shown) so the placeholder 
+                here has to be present to work, but is an empty space -->
+            <input type="text" id="txtName" placeholder=" " required>
+            <label for="txtName">Name</label>
+            <span class="error-textbox">Name is required</span>
+        </div>
+
+        <div class="mat-text">
+            <input type="text" id="txtSize" placeholder=" " required>
+            <label for="txtSize">Size</label>
+            <span class="error-textbox">Size is required</span>
+        </div>
+
+        <div class="mat-text">
+            <input type="text" id="txtType" placeholder=" " required>
+            <label for="txtType">Type</label>
+            <span class="error-textbox">Type is required</span>
+        </div>
     </section>
 
-    <section>
+    <section id="pnlView" style="display:none;">
         <h1>View Inventory</h1>
 
-        <aside>
+        <aside id="filter">
             <h2>Filter Inventory</h2>
             
-            <div class="mat-text">
-                <input type="text" id="txtName" required>
-                <label for="txtName"></label>
-                <span class="error-textbox">Name is required</span>
-            </div>
+            
         </aside>
     </section>
 </body>

@@ -1,4 +1,44 @@
+@use "variables" as v;
+
+
 // material-style textbox
 .mat-text {
-    
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: 16px 0;
+
+    label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        font-size: 1.1rem;
+        padding: 4px 8px;
+        color: #333;
+        transition: top 0.2s ease-in-out, font-size 0.2s ease-in-out;
+    }
+
+    input[type=text] {
+        width: 100%;
+        display: block;
+        padding: 4px 8px;
+        letter-spacing: 1px;
+        font-size: 1.1rem;
+        background-color: transparent !important;
+        border-bottom: 1px solid v.$link-color;
+        transition: border 0.2s ease-in-out;
+
+        &:not(:placeholder-shown) + label,
+        &:focus + label { font-size: 0.7rem; top: -12px; color: v.$link-color; }
+        &:focus { border-width: 3px; border-color: v.$link-color; }
+    }
+
+    .error-textbox {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #c00;
+        margin-left: 8px;
+        display: none;
+    }
 }

@@ -1,0 +1,42 @@
+$link-color: #8C5CF2;
+$link-hover-color: #AD8DF2;
+$bg-color: #F2F2F2;
+
+
+
+@use "fields";
+
+
+
+body {
+    background-color: $bg-color;
+    font-size: 16px;
+}
+
+nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    a {
+        color: $bg-color;
+        text-decoration: none;
+        display: block;
+        padding: 15px;
+        width: 50%;
+        text-align: center;
+        background-color: $link-color;
+        font-weight: 700;
+        letter-spacing: 1px;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+
+        &:hover, &:focus {
+            background-color: $link-hover-color;
+        }
+    }
+}

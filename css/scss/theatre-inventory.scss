@@ -46,4 +46,21 @@ nav {
 
 #pnlAdd {
     padding: 12px;
+
+    .addImage {
+        display: flex;
+        justify-content: space-evenly;
+
+        .camera { display: none; }
+        svg { stroke: v.$link-color; width: 60px; }
+    }
+}
+
+.note {
+    font-size: 0.8rem;
+    color: #333;
+}
+
+@media screen and (max-width: 600px) {
+    #pnlAdd .addImage .camera { display: block; }
 }

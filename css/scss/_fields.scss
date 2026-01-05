@@ -6,7 +6,7 @@
     position: relative;
     display: block;
     width: 100%;
-    margin: 16px 0;
+    margin: 20px 0;
 
     label {
         position: absolute;
@@ -19,7 +19,7 @@
         transition: top 0.2s ease-in-out, font-size 0.2s ease-in-out;
     }
 
-    input[type=text] {
+    input[type=text], textarea {
         width: 100%;
         display: block;
         padding: 4px 8px;
@@ -27,11 +27,19 @@
         font-size: 1.1rem;
         background-color: transparent !important;
         border-bottom: 1px solid v.$link-color;
+        outline: none;
         transition: border 0.2s ease-in-out;
 
         &:not(:placeholder-shown) + label,
         &:focus + label { font-size: 0.7rem; top: -12px; color: v.$link-color; }
         &:focus { border-width: 3px; border-color: v.$link-color; }
+    }
+
+    textarea {
+        padding-top: 12px;
+        height: 200px;
+        min-height: 100px;
+        min-width: 100%;
     }
 
     .error-textbox {
@@ -41,69 +49,4 @@
         margin-left: 8px;
         display: none;
     }
-}
-
-
-
-// file upload
-input[type=file] {
-    padding: 4px;
-    margin: -4px;
-    position: relative;
-    outline: none;
-
-    &::file-selector-button {
-        border-radius: 4px;
-        padding: 0 16px;
-        height: 40px;
-        cursor: pointer;
-        background-color: #fff;
-        border: 1px solid rgba(0, 0, 0, 0.16);
-        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
-        margin-right: 16px;
-
-        /*
-            This is a hack to change the button label. 
-            I'm hiding the default label and then 
-            manually applying the width based on 
-            updated icon and label.
-        */
-        width: 142px;
-        color: transparent;
-
-        /*
-            Firefox doesn't support the pseudo ::before 
-            or ::after elements on this input field so 
-            we need to use the @supports rule to enable 
-            default styles fallback for Firefox.
-        */
-        @supports (-moz-appearance: none) { color: #0964b0; }
-        &:hover { background-color: #f3f4f6; }
-        &:active { background-color: #e5e7eb; }
-    }
-
-    /* Faked label styles and icon */
-    &::before {
-        position: absolute;
-        pointer-events: none;
-        top: 14px;
-        left: 16px;
-        height: 20px;
-        width: 20px;
-        content: "";
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230964B0'%3E%3Cpath d='M18 15v3H6v-3H4v3c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h-2zM7 9l1.41 1.41L11 7.83V16h2V7.83l2.59 2.58L17 9l-5-5-5 5z'/%3E%3C/svg%3E");
-    }
-
-    &::after {
-        position: absolute;
-        pointer-events: none;
-        top: 16px;
-        left: 40px;
-        color: #0964b0;
-        content: "Upload File";
-    }
-
-    /* Handle Component Focus */
-    &:focus-within::file-selector-button,
-    &:focus::file-selector-button { outline: 2px solid #0964b0; outline-offset: 2px; }
 }

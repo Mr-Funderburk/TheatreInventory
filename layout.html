@@ -8,6 +8,7 @@
 
     <title>Theatre Inventory</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
@@ -62,7 +63,14 @@
             <label for="txtTags">Tags</label>
         </div>
         <p class="note">(Optional) Tags should be separated by a comma.</p>
+
+        <a href="#" id="submitAdd">Submit</a>
     </section>
+
+    <button class="testbtn" id="success">Success</button>
+    <button class="testbtn" id="error">Error</button>
+    <button class="testbtn" id="warning">Warning</button>
+    <button class="testbtn" id="info">Info</button>
 
     <section id="pnlView" style="display:none;">
         <h1>View Inventory</h1>
@@ -73,6 +81,8 @@
             
         </aside>
     </section>
+
+    <ul id="notifications"></ul>
 
 
     <script>
@@ -94,6 +104,48 @@
 
             inputFileUpload.addEventListener("change", function(){ updateFileName(this.files[0].name, "file"); });
             inputCameraUpload.addEventListener("change", function(){ updateFileName(this.files[0].name, "camera"); });
+
+            // toast notifications
+            const notifications = document.getElementById("notifications");
+            const toastDetails = {
+                timer: 5000,
+                success: {
+                    icon: "fa-circle-check",
+                    text: "Success: Inventory item added."
+                },
+                error: {
+                    icon: "fa-circle-xmark",
+                    text: "Error: Problem with file upload."
+                },
+                warning: {
+                    icon: "fa-triangle exlamation",
+                    text: "Warning: Something isn't right."
+                },
+                info: {
+                    icon: "fa-circle-info",
+                    text: "Info: Something you should know."
+                }
+            }
+
+            const removeToast = (toast) => {
+                toast.classList.add("hide");
+                if (toast.timeoutId) clearTimeout(toast.timeoutId);
+                setTimeout(() => toast.remove(), 500);
+            }
+
+            const createToast = (id) => {
+                const {icon, text} = toastDetails[id];
+                const toast = document.createElement("li");
+                toast.className = 'toast ${id}';
+                toast.innerHTML = '<div class="column"><i class="fa-solid ${icon}"</i><span>${text}</span></div><i class="fa-solid fa-xmark" onclick=removeToast(this.parentElement)"></i>';
+                notifications.appendChild(toast);
+                toast.timeoutId = setTimeout(() => removeToast(toast), toastDetails.timer);
+            }
+
+            buttons = document.querySelectorAll(".testbtn");
+            buttons.forEach(btn => {
+                btn.addEventListener("click", () => createToast(btn.id));
+            });
         });
 
         function updateFileName(fn, type) {

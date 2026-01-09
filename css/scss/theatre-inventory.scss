@@ -1,6 +1,10 @@
 @use "reset";
 @use "variables" as v;
+@use "toast";
+@use "add";
+@use "view";
 @use "fields";
+@use "sass:color";
 
 
 
@@ -11,11 +15,20 @@ body {
 }
 
 h1 {
-    font-size: 2.45rem;
+    font-size: 2.2rem;
     font-family: "Playfair Display", serif;
     text-align: center;
     margin: 18px 0;
+    color: v.$header-color;
 }
+
+h2 {
+    font-size: 1.8rem;
+    font-family: "Playfair Display", serif;
+    text-align: center;
+}
+
+h3 { font-size: 1.1rem; }
 
 nav {
     position: fixed;
@@ -25,6 +38,7 @@ nav {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    z-index: 50;
 
     a {
         color: v.$bg-color;
@@ -38,38 +52,25 @@ nav {
         letter-spacing: 1px;
         font-size: 1.2rem;
         text-transform: uppercase;
+        position: relative;
 
         &:hover, &:focus {
             background-color: v.$link-hover-color;
         }
-    }
-}
 
-#pnlAdd {
-    padding: 12px;
-
-    .addImage {
-        display: flex;
-        justify-content: space-evenly;
-
-        .camera { display: block; }
-        svg { stroke: v.$link-color; width: 60px; }
-        a:hover svg, a:focus svg { stroke: v.$link-hover-color; }
-    }
-
-    a#submitAdd {
-        background-color: v.$link-color;
-        color: v.$bg-color;
-        font-size: 1.3rem;
-        font-weight: 700;
-        border-radius: 16px;
-        padding: 12px 22px;
-        display: block;
-        margin: 24px;
-        margin-top: 42px;
-        text-align: center;
-
-        &:hover, &:focus { background-color: v.$link-hover-color; }
+        &.active {
+            color: #fff; 
+            background-color: v.$header-color;
+            &::before {
+                content: "";
+                width: 100%;
+                height: 6px;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                background-color: color.adjust(v.$header-color, $lightness: -5%);
+            }
+        }
     }
 }
 
@@ -80,104 +81,4 @@ a {
 .note {
     font-size: 0.8rem;
     color: #333;
-}
-
-@media screen and (min-width: 700px) {
-    #pnlAdd .addImage .camera { display: none; }
-}
-
-
-// toast notifications
-#notifications {
-    position: fixed;
-    top: 30px;
-    right: 20px;
-
-    &:where(.toast, .column) {
-        display: flex;
-        align-items: center
-    }
-
-    .toast {
-        width: 400px;
-        position: relative;
-        overflow: hidden;
-        list-style: none;
-        border-radius: 4px;
-        padding: 15px 17px;
-        margin-bottom: 10px;
-        background-color: v.$toast-light;
-        justify-content: space-between;
-        animation: show_toast 0.3s ease forwards;
-
-        .hide { animation: hide_toast 0.3s ease forwards; }
-        &::before {
-            position: absolute;
-            content: "";
-            height: 3px;
-            width: 100%;
-            bottom: 0;
-            left: 0;
-            animation: progress 5s linear forwards;
-        }
-
-        .column i { font-size: 1.75rem; }
-
-        &.success {
-            .column i { color: v.$toast-success; }
-            &::before { background-color: v.$toast-success; }
-        }
-
-        &.error{
-            .column i { color: v.$toast-error; }
-            &::before { background-color: v.$toast-error; }
-        }
-
-        &.warning {
-            .column i { color: v.$toast-warning; }
-            &::before { background-color: v.$toast-warning; }
-        }
-
-        &.info{
-            .column i { color: v.$toast-info; }
-            &::before { background-color: v.$toast-info; }
-        }
-
-        .column span { font-size: 1.07rem; margin-left: 12px; }
-        i:last-child {
-            color: #aeb0d7; 
-            cursor: pointer; 
-            &:hover { color: v.$toast-dark; }
-        }
-    }
-}
-
-@keyframes show_toast {
-    0%   { transform: translateX(100%); }
-    40%  { transform: translateX(-5%); }
-    80%  { transform: translateX(0%); }
-    100% { transform: translateX(-10px); }
-}
-
-@keyframes show_toast {
-    0%   { transform: translateX(-10px); }
-    40%  { transform: translateX(0%); }
-    80%  { transform: translateX(-5%); }
-    100% { transform: translateX(calc(100% + 20px)); }
-}
-
-@keyframes progress {
-    100% { width: 0; }
-}
-
-@media screen and (max-width: 530px) {
-    #notifications {
-        width: 95%;
-
-        .toast {
-            width: 100%;
-            font-size: 1rem;
-            margin-left: 20px;
-        }
-    }
 }

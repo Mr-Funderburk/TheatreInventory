@@ -1,0 +1,134 @@
+@use "variables" as v;
+@use "sass:color";
+
+#pnlView {
+    position: relative;
+
+    #lblFilterToggle {
+        background-color: v.$bg-color;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.1rem;
+        left: 0;
+        top: 5px;
+        height: 40px;
+        width: 40px;
+        border: 1px solid v.$header-color;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border-left: none;
+        cursor: pointer;
+        transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, left 0.4s ease-in-out;
+        z-index: 10;
+
+        &:hover, &:focus {
+            color: v.$link-hover-color;
+            border-color: v.$link-hover-color;
+        }
+
+        &::before {
+            content: "\f0b0";
+            font-family: FontAwesome;
+        }
+    }
+
+    #filter {
+        background-color: v.$header-color;
+        display: block;
+        width: 100%;
+        position: absolute;
+        top: 5px;
+        left: -100%;
+        transition: left 0.4s ease-in-out;
+        padding-left: 50px;
+        border: 1px solid v.$link-hover-color;
+        border-left: none;
+        z-index: 9;
+        color: #fff;
+
+        div:last-child {
+            margin-bottom: 20px;
+            margin-right: 20px;
+            text-align: right;
+        }
+    }
+
+    #cbFilterToggle:checked {
+        ~ #lblFilterToggle { 
+            left: calc(100% - 41px); 
+            background-color: v.$header-color; 
+            border-color: v.$link-hover-color;
+            color: #fff; 
+            &:hover { color: v.$link-hover-color; }
+            &::before { content: "\f057"; }
+        }
+        ~ #filter { left: -40px; }
+    }
+
+    .item {
+        display: flex;
+        gap: 10px;
+        font-size: 0.9rem;
+        margin: 10px 0;
+
+        img { 
+            width: 75px; 
+            cursor: zoom-in;
+
+            &:hover, &:focus {
+                box-shadow: 0 0 0 4px v.$link-color;
+            }
+        }
+        div:nth-child(2) { flex-grow: 1; }
+        div:nth-child(3) { align-self: center; }
+    }
+}
+
+#fullImg {
+    cursor: zoom-out;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 100;
+}
+
+.btn {
+    display: block;
+    padding: 10px 18px;
+    background-color: v.$link-color;
+    border-radius: 8px;
+    margin: 10px;
+    color: #fff;
+    text-align: center;
+
+    &:hover, &:focus { background-color: v.$link-hover-color; }
+    &.edit { 
+        background-color: v.$toast-success; 
+        &:hover, &:focus {
+            background-color: color.adjust(v.$toast-success, $lightness: 7%); 
+        }
+    }
+    &.delete { 
+        background-color: v.$toast-error; 
+        &:hover, &:focus {
+            background-color: color.adjust(v.$toast-error, $lightness: 7%); 
+        }
+    }
+}
+
+
+@media screen and (min-width: 700px) {
+    #pnlView #filter { left: -450px; width: 450px; max-width: 450px; }
+    #pnlView .item { gap: 25px; }
+    #pnlView .item img { width: 125px; }
+    #pnlView #cbFilterToggle:checked ~ #lblFilterToggle { left: calc(450px - 41px); }
+}

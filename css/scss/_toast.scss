@@ -1,0 +1,95 @@
+@use "variables" as v;
+
+#notifications {
+    position: fixed;
+    top: 30px;
+    right: 20px;
+
+    :where(.toast, .column) {
+        display: flex;
+        align-items: center
+    }
+
+    .toast {
+        width: 400px;
+        position: relative;
+        overflow: hidden;
+        list-style: none;
+        border-radius: 4px;
+        padding: 16px 17px;
+        margin-bottom: 10px;
+        background-color: v.$toast-light;
+        justify-content: space-between;
+        animation: show_toast 0.3s ease forwards;
+
+        &.hide { animation: hide_toast 0.3s ease forwards; }
+        &::before {
+            position: absolute;
+            content: "";
+            height: 3px;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            animation: progress 5s linear forwards;
+        }
+
+        .column i { font-size: 1.75rem; }
+
+        &.success {
+            .column i { color: v.$toast-success; }
+            &::before { background-color: v.$toast-success; }
+        }
+
+        &.error{
+            .column i { color: v.$toast-error; }
+            &::before { background-color: v.$toast-error; }
+        }
+
+        &.warning {
+            .column i { color: v.$toast-warning; }
+            &::before { background-color: v.$toast-warning; }
+        }
+
+        &.info{
+            .column i { color: v.$toast-info; }
+            &::before { background-color: v.$toast-info; }
+        }
+
+        .column span { font-size: 1.07rem; margin-left: 12px; }
+        i:last-child {
+            color: #aeb0d7; 
+            cursor: pointer; 
+            &:hover { color: v.$toast-dark; }
+        }
+    }
+}
+
+@keyframes show_toast {
+    0%   { transform: translateX(100%); }
+    40%  { transform: translateX(-5%); }
+    80%  { transform: translateX(0%); }
+    100% { transform: translateX(-10px); }
+}
+
+@keyframes hide_toast {
+    0%   { transform: translateX(-10px); }
+    40%  { transform: translateX(0%); }
+    80%  { transform: translateX(-5%); }
+    100% { transform: translateX(calc(100% + 20px)); }
+}
+
+@keyframes progress {
+    100% { width: 0; }
+}
+
+@media screen and (max-width: 530px) {
+    #notifications {
+        width: 95%;
+
+        .toast {
+            width: 100%;
+            font-size: 1rem;
+            margin-left: 20px;
+        }
+    }
+}

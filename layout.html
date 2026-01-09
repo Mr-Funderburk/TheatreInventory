@@ -16,70 +16,107 @@
 </head>
 <body>
     <nav>
-        <a href="#">Add</a>
-        <a href="#">View</a>
+        <a href="#" id="navView" class="active">View</a>
+        <a href="#" id="navAdd">Add</a>
     </nav>
 
-    <section id="pnlAdd">
+    <section id="pnlAdd" style="display:none;">
         <h1>Add Inventory</h1>
 
-        <div class="addImage">
-            <div class="upload">
-                <a href="#" id="btn_up_file"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H12M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.5 21L17.5 15M17.5 15L20 17.5M17.5 15L15 17.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                <input type="file" accept="image/*" id="up_file" style="display:none;">
+        <form action="POST" id="addInventory">
+            <div class="addImage">
+                <div class="upload">
+                    <a href="#" id="btn_up_file"><i class="fa-solid fa-upload"></i></a>
+                    <input type="file" accept="image/*" id="up_file" style="display:none;">
+                </div>
+
+                <div class="camera">
+                    <a href="#" id="btn_up_camera"><i class="fa-solid fa-camera"></i></a>
+                    <input type="file" accept="image/*" capture="camera" id="up_camera" style="display:none;">
+                </div>
             </div>
 
-            <div class="camera">
-                <a href="#" id="btn_up_camera"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.3944 7C18.9574 7 19.2389 7 19.4711 7.05628C20.199 7.2327 20.7673 7.801 20.9437 8.52887C21 8.76107 21 9.04256 21 9.60555L21 16C21 17.8856 21 18.8284 20.4142 19.4142C19.8284 20 18.8856 20 17 20L16 20L8 20L7 20C5.11438 20 4.17157 20 3.58579 19.4142C3 18.8284 3 17.8856 3 16L3 9.60555C3 9.04256 3 8.76107 3.05628 8.52887C3.23271 7.801 3.80101 7.2327 4.52887 7.05628C4.76107 7 5.04257 7 5.60555 7V7C5.92098 7 6.07869 7 6.2261 6.9779C6.68235 6.90952 7.10092 6.6855 7.4109 6.34382C7.51105 6.23342 7.59853 6.1022 7.7735 5.83975L8 5.5C8.39637 4.90544 8.59456 4.60816 8.86549 4.40367C9.03094 4.27879 9.2148 4.18039 9.41048 4.112C9.73092 4 10.0882 4 10.8028 4L13.1972 4C13.9118 4 14.2691 4 14.5895 4.112C14.7852 4.18039 14.9691 4.27879 15.1345 4.40367C15.4054 4.60816 15.6036 4.90544 16 5.5L16.2265 5.83975C16.4015 6.1022 16.4889 6.23342 16.5891 6.34382C16.8991 6.6855 17.3177 6.90952 17.7739 6.9779C17.9213 7 18.079 7 18.3944 7V7Z" stroke-width="2" stroke-linejoin="round"/><path d="M15 13C15 14.6569 13.6569 16 12 16C10.3431 16 9 14.6569 9 13C9 11.3431 10.3431 10 12 10C13.6569 10 15 11.3431 15 13Z" stroke-width="2"/></svg></a>
-                <input type="file" accept="image/*" capture="camera" id="up_camera" style="display:none;">
+            <p id="selectedFileName" class="note"></p>
+            <input type="hidden" id="uploadType">
+
+            <div class="mat-text">
+                <!-- the css trick uses :not(:placeholder-shown) so the placeholder 
+                    here has to be present to work, but is an empty space -->
+                <input type="text" id="txtName" placeholder=" " required>
+                <label for="txtName">Name</label>
+                <span class="error-textbox">Name is required</span>
             </div>
-        </div>
 
-        <p id="selectedFileName" class="note"></p>
-        <input type="hidden" id="uploadType">
+            <div class="mat-text">
+                <input type="text" id="txtSize" placeholder=" " required>
+                <label for="txtSize">Size</label>
+                <span class="error-textbox">Size is required</span>
+            </div>
 
-        <div class="mat-text">
-            <!-- the css trick uses :not(:placeholder-shown) so the placeholder 
-                here has to be present to work, but is an empty space -->
-            <input type="text" id="txtName" placeholder=" " required>
-            <label for="txtName">Name</label>
-            <span class="error-textbox">Name is required</span>
-        </div>
+            <div class="mat-text">
+                <input type="text" id="txtType" placeholder=" " required>
+                <label for="txtType">Type</label>
+                <span class="error-textbox">Type is required</span>
+            </div>
 
-        <div class="mat-text">
-            <input type="text" id="txtSize" placeholder=" " required>
-            <label for="txtSize">Size</label>
-            <span class="error-textbox">Size is required</span>
-        </div>
+            <div class="mat-text">
+                <textarea name="txtTags" id="txtTags" placeholder=" " data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false"></textarea>
+                <label for="txtTags">Tags</label>
+            </div>
+            <p class="note">(Optional) Tags should be separated by a comma.</p>
 
-        <div class="mat-text">
-            <input type="text" id="txtType" placeholder=" " required>
-            <label for="txtType">Type</label>
-            <span class="error-textbox">Type is required</span>
-        </div>
-
-        <div class="mat-text">
-            <textarea name="txtTags" id="txtTags" placeholder=" "></textarea>
-            <label for="txtTags">Tags</label>
-        </div>
-        <p class="note">(Optional) Tags should be separated by a comma.</p>
-
-        <a href="#" id="submitAdd">Submit</a>
+            <div class="submitContainer">
+                <div class="fa fa-check" id="submitDone"></div>
+                <div class="fa fa-close" id="submitFailed"></div>
+                <input type="submit" id="submitAdd" value="Submit">
+            </div>
+        </form>
     </section>
 
-    <button class="testbtn" id="success">Success</button>
-    <button class="testbtn" id="error">Error</button>
-    <button class="testbtn" id="warning">Warning</button>
-    <button class="testbtn" id="info">Info</button>
-
-    <section id="pnlView" style="display:none;">
+    <section id="pnlView">
         <h1>View Inventory</h1>
+        <div id="fullImg" style="display:none;"></div>
 
+        <input type="checkbox" id="cbFilterToggle">
+        <label for="cbFilterToggle" id="lblFilterToggle"></label>
         <aside id="filter">
             <h2>Filter Inventory</h2>
             
+            <div class="mat-text">
+                <input type="text" id="txtFiltName" placeholder=" ">
+                <label for="txtFiltName">Name</label>
+            </div>
             
+            <div class="mat-text">
+                <input type="text" id="txtFiltSize" placeholder=" ">
+                <label for="txtFiltSize">Size</label>
+            </div>
+            
+            <div class="mat-text">
+                <input type="text" id="txtFiltType" placeholder=" ">
+                <label for="txtFiltType">Type</label>
+            </div>
+            
+            <div class="mat-text">
+                <input type="text" id="txtFiltTags" placeholder=" ">
+                <label for="txtFiltTags">Tags</label>
+            </div>
+
+            <div style="text-align:center;">
+                <label for="cbMatchAll" class="switch">
+                    <input type="checkbox" id="cbMatchAll">
+                    <i></i> 
+                    <span></span>
+                </label>
+            </div>
+
+            <div>
+                <a href="layout.html" class="btn">Clear Filters</a>
+                <a href="#" class="btn" id="applyFilters">Apply Filters</a>
+            </div>
         </aside>
+
+        <div id="itemsContainer"></div>
     </section>
 
     <ul id="notifications"></ul>
@@ -91,6 +128,10 @@
             const btnCameraUpload = document.getElementById("btn_up_camera");
             const inputFileUpload = document.getElementById("up_file");
             const inputCameraUpload = document.getElementById("up_camera");
+            const submitButton = document.getElementById("submitAdd");
+            const submitDone = document.getElementById("submitDone");
+            const submitFailed = document.getElementById("submitFailed");
+            const theForm = document.getElementById("addInventory");
 
             btnFileUpload.addEventListener("click", function(e){ 
                 e.preventDefault();
@@ -105,6 +146,52 @@
             inputFileUpload.addEventListener("change", function(){ updateFileName(this.files[0].name, "file"); });
             inputCameraUpload.addEventListener("change", function(){ updateFileName(this.files[0].name, "camera"); });
 
+
+            // submit
+            submitButton.addEventListener("click", function(e){
+                e.preventDefault();
+                this.disabled = true;
+                this.classList.add("loading");
+                
+                setTimeout(function(){
+                    submitButton.classList.add("hide-loading");
+                    submitDone.classList.add("finish");
+                }, 3000);
+
+                setTimeout(function(){
+                    submitButton.classList.remove("loading");
+                    submitButton.classList.remove("hide-loading");
+                    submitButton.disabled = false;
+                    submitDone.classList.remove("finish");
+                    submitFailed.classList.remove("finish");
+                    theForm.reset();
+                    document.getElementById("txtName").focus();
+                }, 5000);
+            });
+
+
+            // nav
+            const navAdd = document.getElementById("navAdd");
+            const navView = document.getElementById("navView");
+            const pnlAdd = document.getElementById("pnlAdd");
+            const pnlView = document.getElementById("pnlView");
+            navAdd.addEventListener("click", function(e){
+                e.preventDefault();
+                pnlAdd.style.display = "block";
+                pnlView.style.display = "none";
+                navAdd.classList.add("active");
+                navView.classList.remove("active");
+            });
+
+            navView.addEventListener("click", function(e){
+                e.preventDefault();
+                pnlAdd.style.display = "none";
+                pnlView.style.display = "block";
+                navAdd.classList.remove("active");
+                navView.classList.add("active");
+            });
+
+
             // toast notifications
             const notifications = document.getElementById("notifications");
             const toastDetails = {
@@ -118,7 +205,7 @@
                     text: "Error: Problem with file upload."
                 },
                 warning: {
-                    icon: "fa-triangle exlamation",
+                    icon: "fa-triangle-exclamation",
                     text: "Warning: Something isn't right."
                 },
                 info: {
@@ -136,15 +223,76 @@
             const createToast = (id) => {
                 const {icon, text} = toastDetails[id];
                 const toast = document.createElement("li");
-                toast.className = 'toast ${id}';
-                toast.innerHTML = '<div class="column"><i class="fa-solid ${icon}"</i><span>${text}</span></div><i class="fa-solid fa-xmark" onclick=removeToast(this.parentElement)"></i>';
+                toast.className = `toast ${id}`;
+                toast.innerHTML = `<div class="column"><i class="fa-solid ${icon}"></i><span>${text}</span></div><i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
                 notifications.appendChild(toast);
                 toast.timeoutId = setTimeout(() => removeToast(toast), toastDetails.timer);
             }
 
-            buttons = document.querySelectorAll(".testbtn");
-            buttons.forEach(btn => {
-                btn.addEventListener("click", () => createToast(btn.id));
+
+            // view items
+            let items = [];
+
+            // simulated from db
+            tags0 = "90s, Mean Girls";
+            items[0] = {
+                img: "dress.jpg",
+                name: "Green Dress",
+                size: "Small",
+                type: "Dress",
+                tagsString: tags0,
+                tags: tags0.split(",").map(item => item.trim())
+            };
+
+            tags1 = "Boys, Men, Fancy";
+            items[1] = {
+                img: "dress_pants.jpg",
+                name: "Dress Slacks",
+                size: "Small",
+                type: "Pants",
+                tagsString: tags1,
+                tags: tags1.split(",").map(item => item.trim())
+            };
+
+            tags2 = "Boys, Men, Fancy, 90s";
+            items[2] = {
+                img: "dress_pants.jpg",
+                name: "Dress Slacks",
+                size: "Medium",
+                type: "Pants",
+                tagsString: tags2,
+                tags: tags2.split(",").map(item => item.trim())
+            };
+
+            loadItems(items);
+
+            const applyFiltersButton = document.getElementById("applyFilters");
+            applyFiltersButton.addEventListener("click", function(e){
+                e.preventDefault();
+
+                const _name = document.getElementById("txtFiltName").value.trim();
+                const _size = document.getElementById("txtFiltSize").value.trim();
+                const _type = document.getElementById("txtFiltType").value.trim();
+                const _tags = document.getElementById("txtFiltTags").value.trim();
+
+                if (_name == "" && _size == "" && _type == "" && _tags == "") {
+                    document.getElementById("cbFilterToggle").checked = false;
+                    return;
+                }
+
+                let filters = {
+                    name: _name,
+                    size: _size,
+                    type: _type,
+                    tags: _tags.toLowerCase().split(",").map(tag => tag.trim())
+                };
+
+                if (filters.tags.length == 1 && filters.tags[0].trim() == "") {
+                    filters.tags = null;
+                }
+                
+                loadItems(items, filters);
+                document.getElementById("cbFilterToggle").checked = false;
             });
         });
 
@@ -152,6 +300,108 @@
             if (fn == "") return;
             document.getElementById("selectedFileName").innerHTML = "<strong>Selected Image:</strong> " + fn;
             document.getElementById("uploadType").value = type;
+        }
+
+
+        // full size image
+        const fullDiv = document.getElementById("fullImg");
+        fullDiv.addEventListener("click", function(){ fullDiv.style.display = "none"; });
+
+        function fullScale(img) {
+            fullDiv.style.display = "block";
+            fullDiv.style.backgroundImage = `url("${img}")`;
+        }
+
+
+        function loadItems(items, filters={}) {
+            const itemsContainer = document.getElementById("itemsContainer");
+            itemsContainer.innerHTML = "";
+
+            let matchAll = document.getElementById("cbMatchAll").checked;
+
+            items.forEach(item => {
+                // check filters
+                if (Object.keys(filters).length > 0) {
+                    let matchCount = 0;
+                    let blanks = 0;
+
+                    if (filters.name != "") {
+                        if (item.name.toLowerCase() == filters.name.toLowerCase()) { matchCount++; }
+                    } else {
+                        blanks++;
+                    }
+
+                    if (filters.size != "") {
+                        if (item.size.toLowerCase() == filters.size.toLowerCase()) { matchCount++; }
+                    } else {
+                        blanks++;
+                    }
+                    
+                    if (filters.type != "") {
+                        if (item.type.toLowerCase() == filters.type.toLowerCase()) { matchCount++; }
+                    } else {
+                        blanks++;
+                    }
+
+                    if (filters.tags == null || filters.tags.length == 0) {
+                        blanks++;
+                    } else {
+                        const set = new Set(item.tags.map(tag => tag.toLowerCase()));
+                        const matches = filters.tags.filter(t => set.has(t));
+                        if (matches.length > 0) { matchCount++; }
+                    }
+
+                    if (matchCount == 0) { return; }
+                    if (matchAll && matchCount != (4 - blanks)) { return; }
+                }
+
+                const box = document.createElement("div");
+                box.classList.add("item");
+
+                const divImage = document.createElement("div");
+                const image = document.createElement("img");
+                image.src = "img/" + item.img;
+                image.alt = item.name;
+                image.addEventListener("click", () => { fullScale(image.src) });
+                divImage.appendChild(image);
+                box.appendChild(divImage);
+
+                const divDetails = document.createElement("div");
+                const h3Name = document.createElement("h3");
+                h3Name.innerText = item.name;
+                divDetails.appendChild(h3Name);
+
+                const pSize = document.createElement("p");
+                pSize.innerText = item.size;
+                divDetails.appendChild(pSize);
+
+                const pType = document.createElement("p");
+                pType.innerText = item.type;
+                divDetails.appendChild(pType);
+
+                const pTags = document.createElement("p");
+                pTags.innerText = item.tagsString;
+                divDetails.appendChild(pTags);
+                
+                box.appendChild(divDetails);
+
+                const divButtons = document.createElement("div");
+                const editButton = document.createElement("a");
+                editButton.href = "#";
+                editButton.classList.add("btn");
+                editButton.classList.add("edit");
+                editButton.innerText = "Edit";
+                const deleteButton = document.createElement("a");
+                deleteButton.href = "#";
+                deleteButton.classList.add("btn");
+                deleteButton.classList.add("delete");
+                deleteButton.innerText = "Delete";
+                divButtons.appendChild(editButton);
+                divButtons.appendChild(deleteButton);
+                box.appendChild(divButtons);
+
+                itemsContainer.appendChild(box);
+            });
         }
     </script>
 </body>

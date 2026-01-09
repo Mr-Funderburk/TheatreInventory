@@ -16,18 +16,10 @@
     
     <link rel="stylesheet" href="css/theatre-inventory.css">
 
-    <script src="js/site.js"></script>
+    <script src="js/edit.js"></script>
 </head>
-<body>
-    <nav>
-        <a href="#" id="navView" class="active">View</a>
-        <a href="#" id="navAdd">Add</a>
-    </nav>
-    
+<body>    
     <?php require_once "partials/config.php"; ?>
-    <?php require "partials/add.php"; ?>
-    <?php require "partials/view.php"; ?>
-
-    <ul id="notifications"></ul>
+    <?php require "partials/edit.php"; ?>
 </body>
 </html>

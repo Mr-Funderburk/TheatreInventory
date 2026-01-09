@@ -4,10 +4,6 @@
 const DB_USERNAME = "root";
 const DB_PASSWORD = "";
 
-/* REMOTE */
-// const DB_USERNAME = "sfunderburk";
-// const DB_PASSWORD = "01Funder$22";
-
 const DB_SERVER = "localhost";
 const DB_DATABASE = "canterbury_theatre_inventory";
 
